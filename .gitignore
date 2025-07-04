@@ -1,1 +1,30 @@
-node_modules
+# Node.js
+node_modules/
+dist/
+.env
+*.log
+
+# TypeScript
+*.tsbuildinfo
+
+# Editor/OS files
+.DS_Store
+.vscode/
+.idea/
+
+# Yarn/PM Lock files (optional if not using both)
+yarn.lock
+package-lock.json
+
+# Build folders (React/Vite)
+react/dist/
+react/node_modules/
+react/.vite/
+
+# Server build
+server/node_modules/
+server/dist/
+
+# Output folders
+*.out
+*.cache

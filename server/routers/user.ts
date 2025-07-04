@@ -14,11 +14,11 @@ export const userRouter = router({
         .mutation(async (opts) => {
             let username = opts.input.username;
             let password = opts.input.password;
-            let response = await opts.ctx.db.User.insertMany([{
+            let response = await opts.ctx.db.User.create({
                 username,
                 password
-            }])
-            let userId = response[0]._id;
+            })
+            let userId = response._id;
             const token: string = jwt.sign({ userId: userId }, SECRET, { expiresIn: '1h' });
 
             return {
@@ -32,7 +32,7 @@ export const userRouter = router({
         }))
         .mutation(async (opts) => {
             let response = await opts.ctx.db.User.find({
-                email: opts.input.username
+                username: opts.input.username
             });
             if (!response) {
                 throw new TRPCError({ code: 'UNAUTHORIZED' });
@@ -46,7 +46,7 @@ export const userRouter = router({
     me: publicProcedure
         .use(isLoggedIn)
         .output(z.object({
-            email: z.string()
+            username: z.string()
         }))
         .query(async (opts) => {
             let response = await opts.ctx.db.User.findById(opts.ctx.userId);
@@ -55,7 +55,7 @@ export const userRouter = router({
                 throw new TRPCError({ code: 'UNAUTHORIZED' });
             }
             return {
-                email: response.username || "",
+                username: response.username || "",
             }
         }),
 });

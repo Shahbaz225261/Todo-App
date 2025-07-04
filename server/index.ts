@@ -8,8 +8,6 @@ import { todoRouter } from './routers/todo';
 import cors from "cors";
 export const SECRET = 'SECr3t';
 
-mongoose.connect('mongodb+srv://kirattechnologies:iRbi4XRDdM7JMMkl@cluster0.e95bnsi.mongodb.net/admin?authSource=admin&replicaSet=atlas-ue73sj-shard-0&readPreference=primary&appname=MongoDB%20Compass&ssl=true', { dbName: "todo" });
-
 // using trpc
 const appRouter = router({
     user: userRouter,
@@ -30,7 +28,7 @@ const server = createHTTPServer({
         if (authHeader) {
             const token = authHeader.split(' ')[1];
             console.log(token);
-            return new Promise<{db: {Todo: typeof Todo, User: typeof User}, userId?: string}>((resolve) => {
+            return new Promise((resolve) => {
                 jwt.verify(token, SECRET, (err, user) => {
                     if (user) {
                         resolve({userId: user.userId as string, db: {Todo, User}});
@@ -40,7 +38,6 @@ const server = createHTTPServer({
                 });
             })
         }
-
         return {
             db: {Todo, User},
         }

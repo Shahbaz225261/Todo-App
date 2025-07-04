@@ -1,6 +1,6 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { httpBatchLink } from '@trpc/client';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { trpc } from './utils/trpc';
 
 export default function App() {
@@ -50,7 +50,7 @@ export function IndexPage() {
 
   return (
     <div>
-      <p>Hi {userQuery.data?.email}</p>
+      <p>Hi {userQuery.data?.username}</p>
       {todoQuery.data?.map(x => <div>{x.title} - {x.description}</div>)}
       <button disabled={todoMutate.isLoading} onClick={() => todoMutate.mutate({ title: 'Frodo', description: "go to gym" })}>
         Create Todo

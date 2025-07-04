@@ -9,9 +9,5 @@ export const isLoggedIn = middleware(async (opts) => {
     let user = await ctx.db.User.findOne({
         username: ctx.userId
     })
-    return opts.next({
-      ctx: {
-        user
-      },
-    });
+    return opts.next();
   });
